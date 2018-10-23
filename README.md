@@ -1,8 +1,16 @@
-# Projekt-PROG1
+# Analiza najbolj branih knjig 20. stol.
 
 Pri predmetu Programiranje 1 moram pripraviti projektno nalogo iz analize podatkov. Odločil sem se, da si podatke pridobim s strani [Goodreads](https://www.goodreads.com/list/show/6.Best_Books_of_the_20th_Century?page=1) z uporabo pythona, nato pa jih bom analiziral. Omejil se bom na najboljše knjige dvajsetega stoletja, ki so po mnenju bralcev najboljša.
 
-Vprašanja:
+Za vsako knjigo bom zajel:
+- naslov
+- dolžino
+- opis
+- žaner
+- avtorja
+- oceno
+ 
+Delovne hipoteze:
 - Knjige katerega avtorja so najboljše?
 - Kateri žanri so najbolj priljubljeni?
 - Kakšna je povprečna ocena knjig?
