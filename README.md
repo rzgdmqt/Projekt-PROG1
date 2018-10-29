@@ -6,7 +6,7 @@ Za vsako knjigo bom zajel:
 - naslov
 - dolžino
 - opis
-- žaner
+- jezik
 - avtorja
 - oceno
  
