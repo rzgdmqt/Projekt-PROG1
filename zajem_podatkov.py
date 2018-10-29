@@ -5,8 +5,7 @@ import csv
 import sys
 
 
-author_url = 'https://www.goodreads.com/author/show/{}'
-book_url = 'https://www.goodreads.com/book/show/{}'
+book_url = 'https://www.goodreads.com{}'
 goodreads_frontpage_url = 'https://www.goodreads.com/list/show/6.Best_Books_of_the_20th_Century?page=1'
 # mapa, v katero bomo shranili podatke
 directory = r'C:\Users\MasterX\Desktop\UVP\Projekt-PROG1\html_strani_in_csv'
@@ -29,7 +28,9 @@ regex_books = re.compile(
 regex_data = re.compile(
     r'<tr itemscope itemtype=.*?'
     r'<div id="(?P<ID_knjige>.*?)" class="u-anchorTarget"></div>.*?'
+    r'<a title=".*?" href="(?P<url_knjige>.*?)">.*?'
     r"itemprop='name'>(?P<naslov>.*?)</span>.*?"
+    r'itemprop="url" href="(?P<url_avtorja>https://www.goodreads.com/author/show/.*?)">'
     r'<span itemprop="name">(?P<avtor>.*?)</span></a>.*?'
     r'</span> (?P<ocena>.+?) avg rating.*?'
     r'&mdash; (?P<koliko_ocen>.+?) ratings</span>.*?'
@@ -55,15 +56,16 @@ regex_bd = re.compile(
 )
 # regularni izraz, ki razbije avtorje na posamezne dele
 regex_a = re.compile(
-    r'<head>.*?'
-    r'</html>'
+    r'<title>.*?</title>.*?'
+    r'<a target="_blank" itemprop="url"',
+    re.DOTALL
 )
 # regularni izraz, ki vzame podatke o avtorju
 regex_ad = re.compile(
-    r'<a data-text-id="author(?P<ID_avtorja>.*?)" href='
-    r'<div class="dataItem" itemprop=.*?>.*?\s*(?P<rojstvo>.*?).*?</div>',
+    r'ata-source="youtube" data-source-id="3xM8hvEE2dI"',
     re.DOTALL
 )
+
 
 
 def save_url_to_file(url, directory, fp_filename, over_write="w", vsili_prenos=False):
@@ -131,16 +133,24 @@ def download_more_pages(num, url, directory, fp_filename):
         save_url_to_file(url.format(i), directory, fp_filename, "a", True)
 
 
-def download_book_site(page_url, directory, csv_filename, each_filename):
+def download_book_site(csv_filename, directory, each_filename, book_url):
     path = os.path.join(directory, csv_filename)
-    ids = []
+    slovarji = []
     with open(path, "r", encoding='utf-8') as f:
-        for line in f:
-            if "ID" in line.split(",")[0]:
-                ids.append(line.split(",")[0])
-            else:
-                ids.append(line.split(",")[-1])
-    for ID in ids[1:]:
-        if ID != "\n":
-            save_url_to_file(page_url.format(ID), directory, each_filename, "a", True)
+        reader = csv.DictReader(f)
+        for row in reader:
+            slovarji.append(row)
+    for i in slovarji:
+        save_url_to_file(book_url.format(i["url_knjige"]), directory, each_filename, "a", True)
+
+
+def download_author_page(csv_filename, directory, author_filename):
+    path = os.path.join(directory, csv_filename)
+    slovarji = []
+    with open(path, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            slovarji.append(row)
+    for i in slovarji:
+        save_url_to_file(i["url_avtorja"], directory, author_filename, "a", True)
 
