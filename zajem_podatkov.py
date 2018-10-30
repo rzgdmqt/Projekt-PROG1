@@ -9,6 +9,8 @@ book_url = 'https://www.goodreads.com{}'
 goodreads_frontpage_url = 'https://www.goodreads.com/list/show/6.Best_Books_of_the_20th_Century?page=1'
 # mapa, v katero bomo shranili podatke
 directory = r'C:\Users\MasterX\Desktop\UVP\Projekt-PROG1\html_strani_in_csv'
+directory_knjige = r'C:\Users\MasterX\Desktop\UVP\Projekt-PROG1\html_strani_in_csv\knjige_ločeno'
+directory_avtorji = r'C:\Users\MasterX\Desktop\UVP\Projekt-PROG1\html_strani_in_csv\avtorji_ločeno'
 # ime datoteke v katero bomo shranili glavno stran
 frontpage_filename = 'frontpage.html'
 # ime datoteke s posameznimi knjigami
@@ -17,8 +19,8 @@ each_filename = 'each.html'
 author_filename = 'author.html'
 # ime CSV datotek v katere bomo shranili podatke
 csv_filenameV = 'knjige.csv'
-csv_filenameK = 'knjiga.csv'
-csv_filenameA = 'avtor.csv'
+csv_filenameK = 'knjiga{}.csv'
+csv_filenameA = 'avtor{}.csv'
 # regularni izraz, ki razbije stran na posamezne knjige
 regex_books = re.compile(
             r'<tr itemscope itemtype.*?Error rating book. Refresh and try again.',
@@ -30,7 +32,7 @@ regex_data = re.compile(
     r'<div id="(?P<ID_knjige>.*?)" class="u-anchorTarget"></div>.*?'
     r'<a title=".*?" href="(?P<url_knjige>.*?)">.*?'
     r"itemprop='name'>(?P<naslov>.*?)</span>.*?"
-    r'itemprop="url" href="(?P<url_avtorja>https://www.goodreads.com/author/show/.*?)">'
+    r'itemprop="url" href="(?P<url_avtorja>https://www.goodreads.com/author/show/(?P<ID_avtorja>.*?)\..*?)">'
     r'<span itemprop="name">(?P<avtor>.*?)</span></a>.*?'
     r'</span> (?P<ocena>.+?) avg rating.*?'
     r'&mdash; (?P<koliko_ocen>.+?) ratings</span>.*?'
@@ -62,10 +64,10 @@ regex_a = re.compile(
 )
 # regularni izraz, ki vzame podatke o avtorju
 regex_ad = re.compile(
-    r'ata-source="youtube" data-source-id="3xM8hvEE2dI"',
+    r'href="https://www.goodreads.com/author/show/(?P<ID_avtorja>.*?)\.(?P<avtor>.*?)" />.*?'
+    r'<div class="dataItem" itemprop=\'birthDate\'>\n\s*?(?P<rojstvo>.*?)\n\s*?</div>',
     re.DOTALL
 )
-
 
 
 def save_url_to_file(url, directory, fp_filename, over_write="w", vsili_prenos=False):
@@ -141,7 +143,7 @@ def download_book_site(csv_filename, directory, each_filename, book_url):
         for row in reader:
             slovarji.append(row)
     for i in slovarji:
-        save_url_to_file(book_url.format(i["url_knjige"]), directory, each_filename, "a", True)
+        save_url_to_file(book_url.format(i["url_knjige"]), directory, each_filename.format(i["ID_knjige"]))
 
 
 def download_author_page(csv_filename, directory, author_filename):
@@ -152,5 +154,5 @@ def download_author_page(csv_filename, directory, author_filename):
         for row in reader:
             slovarji.append(row)
     for i in slovarji:
-        save_url_to_file(i["url_avtorja"], directory, author_filename, "a", True)
-
+        print(i)
+        save_url_to_file(i["url_avtorja"], directory, author_filename.format(i["ID_avtorja"]))
