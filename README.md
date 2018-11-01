@@ -14,6 +14,7 @@ Za vsako knjigo sem zajel:
   - leto izida
 - avtorji.csv vsebuje:
   - avtorja (ID, kraj in leto rojstva)
+
 ostali pomožni csv datoteki služita zgolj lažjemu shranjevanju strani in sta združeni v datoteki knjige.csv (brez hiper povezave do avtorja in knjige same.)
 
 
