@@ -39,6 +39,12 @@ for slovar1 in slovarji1:
 
 vrstice = zadnji_slovarji
 header = []
+for slovar in vrstice:
+    slovar["koliko_ocen"] = int(slovar["koliko_ocen"].replace(',', ''))
+    slovar["tocke"] = int(slovar["tocke"].replace(',', ''))
+    slovar["stevilo_glasov"] = int(slovar["stevilo_glasov"].replace(',', ''))
+
+
 for i in vrstice[0].keys():
     header.append(str(i))
 write_csv(header, vrstice, directory_write, csv_books)

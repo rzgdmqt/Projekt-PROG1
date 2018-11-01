@@ -35,7 +35,7 @@ regex_book_data_general = re.compile(
     r"itemprop='name'>(?P<naslov>.*?)</span>.*?"
     r'itemprop="url" href="(?P<url_avtorja>https://www.goodreads.com/author/show/(?P<ID_avtorja>.*?)\..*?)">'
     r'<span itemprop="name">(?P<avtor>.*?)</span></a>.*?'
-    r'</span> (?P<ocena>.+?) avg rating.*?'
+    r'</span> (?P<ocena>\d\.\d{2}) avg rating.*?'
     r'&mdash; (?P<koliko_ocen>.+?) ratings</span>.*?'
     r'<a href="#" onclick=.*?>score: (?P<tocke>.*?)</a>.*?'
     r'return false;">(?P<stevilo_glasov>.*?) people voted</a>',
