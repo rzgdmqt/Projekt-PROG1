@@ -6,9 +6,10 @@ Za vsako knjigo bom zajel:
 - naslov
 - dolžino
 - opis
-- jezik
-- avtorja
 - oceno
+- vezavo
+- avtorja (kraj in leto rojstva)
+
  
 Delovne hipoteze:
 - Knjige katerega avtorja so najboljše?
