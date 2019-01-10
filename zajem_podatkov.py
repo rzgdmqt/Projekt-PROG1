@@ -1,9 +1,9 @@
 from orodja import *
 
 
-# download_more_pages(int(input("Koliko strani želiš analizirati? (na strani je 100 knjig): ")),
-#                     goodreads_frontpage_url, directory_write, frontpage_filename)
-# write_books_to_csv()
+download_more_pages(int(input("Koliko strani želiš analizirati? (na strani je 100 knjig): ")),
+                    goodreads_frontpage_url, directory_write, frontpage_filename)
+write_books_to_csv()
 download_book_site()
 download_author_page()
 write_authors_to_csv()
