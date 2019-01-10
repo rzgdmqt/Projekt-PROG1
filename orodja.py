@@ -8,9 +8,9 @@ import sys
 book_url = 'https://www.goodreads.com{}'
 goodreads_frontpage_url = 'https://www.goodreads.com/list/show/6.Best_Books_of_the_20th_Century?page=1'
 # mapa, v katero bomo shranili podatke
-directory_write = r'C:\Users\MasterX\Desktop\UVP\Projekt-PROG1\html_strani_in_csv'
-directory_books_html = r'C:\Users\MasterX\Desktop\UVP\Projekt-PROG1\html_strani_in_csv\knjige_ločeno'
-directory_authors_html = r'C:\Users\MasterX\Desktop\UVP\Projekt-PROG1\html_strani_in_csv\avtorji_ločeno'
+directory_write = r'html_strani_in_csv'
+directory_books_html = r'html_strani_in_csv/knjige_ločeno' # popravi naslov
+directory_authors_html = r'html_strani_in_csv/avtorji_ločeno' # popravi naslov
 # ime datoteke v katero bomo shranili glavno stran
 frontpage_filename = 'frontpage.html'
 # ime datoteke s posameznimi knjigami
@@ -225,6 +225,11 @@ def write_authors_to_csv():
     vrstice = []
     for ID in ids:
         slovar = get_dict_from_single_block(directory_authors_html, author_filename.format(ID), regex_author_data)
+        try:
+            if slovar["kraj_rojstva"][:2] == "in":
+                slovar["kraj_rojstva"] = slovar["kraj_rojstva"][3:]
+        except:
+            pass
         vrstice.append(slovar)
     header = []
     for i in vrstice[0].keys():

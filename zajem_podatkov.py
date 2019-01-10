@@ -1,9 +1,9 @@
 from orodja import *
 
 
-download_more_pages(int(input("Koliko strani želiš analizirati? (na strani je 100 knjig): ")),
-                    goodreads_frontpage_url, directory_write, frontpage_filename)
-write_books_to_csv()
+# download_more_pages(int(input("Koliko strani želiš analizirati? (na strani je 100 knjig): ")),
+#                     goodreads_frontpage_url, directory_write, frontpage_filename)
+# write_books_to_csv()
 download_book_site()
 download_author_page()
 write_authors_to_csv()
@@ -40,9 +40,9 @@ for slovar1 in slovarji1:
 vrstice = zadnji_slovarji
 header = []
 for slovar in vrstice:
-    slovar["koliko_ocen"] = int(slovar["koliko_ocen"].replace(',', ''))
+    slovar["koliko_ocen"] = abs(int(slovar["koliko_ocen"].replace(',', '')))
     slovar["tocke"] = int(slovar["tocke"].replace(',', ''))
-    slovar["stevilo_glasov"] = int(slovar["stevilo_glasov"].replace(',', ''))
+    slovar["stevilo_glasov"] = abs(int(slovar["stevilo_glasov"].replace(',', '')))
 
 
 for i in vrstice[0].keys():
