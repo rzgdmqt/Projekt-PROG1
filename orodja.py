@@ -5,28 +5,41 @@ import csv
 import sys
 
 
+# spletni naslov, ki ga bomo dopolnjevali z avtorjem oziroma knjigo
 book_url = 'https://www.goodreads.com{}'
+
+# osnovna spletna stran
 goodreads_frontpage_url = 'https://www.goodreads.com/list/show/6.Best_Books_of_the_20th_Century?page=1'
+
 # mapa, v katero bomo shranili podatke
 directory_write = r'html_strani_in_csv'
-directory_books_html = r'html_strani_in_csv/knjige_ločeno' # popravi naslov
-directory_authors_html = r'html_strani_in_csv/avtorji_ločeno' # popravi naslov
+directory_books_html = r'html_strani_in_csv/knjige_ločeno'
+directory_authors_html = r'html_strani_in_csv/avtorji_ločeno'
+
+
 # ime datoteke v katero bomo shranili glavno stran
 frontpage_filename = 'frontpage.html'
+
 # ime datoteke s posameznimi knjigami
 book_filename = 'knjiga{}.html'
+
 # ime datoteke z avtorjevo stranjo
 author_filename = 'autor{}.html'
+
+
 # ime CSV datotek v katere bomo shranili podatke
 csv_all = 'knjige_pomozna_vse.csv'
 csv_each = 'knjige_pomozna_vsaka.csv'
 csv_authors = 'avtorji.csv'
 csv_books = 'knjige.csv'
+
+
 # regularni izraz, ki razbije stran na posamezne knjige
 regex_book_block = re.compile(
             r'<tr itemscope itemtype.*?Error rating book. Refresh and try again.',
             re.DOTALL
     )
+
 # regularni izraz, ki razbije knjigo na posamezne podatke
 regex_book_data_general = re.compile(
     r'<tr itemscope itemtype=.*?'
@@ -41,6 +54,7 @@ regex_book_data_general = re.compile(
     r'return false;">(?P<stevilo_glasov>.*?) people voted</a>',
     re.DOTALL
 )
+
 # regularni izraz, ki vzame podatke o knjigi iz njene strani
 regex_book_data = re.compile(
     r'<meta content=\'https://www.goodreads.com/author/show/(?P<ID_avtorja>.*?)\.'
@@ -55,6 +69,7 @@ regex_book_data = re.compile(
     ,
     re.DOTALL
 )
+
 # regularni izraz, ki vzame podatke o avtorju
 regex_author_data = re.compile(
     r'href="https://www.goodreads.com/author/show/(?P<ID_avtorja>.*?)\.\w*?" />.*?'
@@ -252,6 +267,7 @@ def write_book_site_to_csv():
 
 
 def merge_dicts(*dicts):
+    """Združi slovarje dicts v en slovar in ga vrne"""
     result = {}
     for dictionary in dicts:
         result.update(dictionary)
